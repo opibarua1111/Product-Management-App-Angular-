@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <h2 class="text-center mt-3">Register</h2>
+        <div class="mb-3">
+          <label for="UserName" class="form-label">UserName</label>
+          <input type="text" class="form-control" formControlName="UserName" id="UserName" >
+          <div *ngIf="registerForm.controls['UserName'].invalid && registerForm.controls['UserName'].touched">
+            UserName is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="Email" class="form-label">Email address</label>
+          <input type="email" class="form-control" formControlName="Email" id="Email">
+          <div *ngIf="registerForm.controls['Email'].invalid && registerForm.controls['Email'].touched">
+            Email is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="Password" class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="Password" id="Password">
+          <div *ngIf="registerForm.controls['Password'].invalid && registerForm.controls['Password'].touched">
+            password is required.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success">Register</button>
+        <span class="ps-3">Have a account?</span> <a href="/login" >Login</a>
+
+      </form>
+
+    </div>
+  </div>
+</div>

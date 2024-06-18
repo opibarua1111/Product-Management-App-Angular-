@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+/* Custom Toastr Styles */
+.toast-success {
+  background-color: #51a351 !important; /* Custom success background color */
+  color: white !important; /* Custom text color */
+}
+
+.toast-error {
+  background-color: #bd362f !important; /* Custom error background color */
+  color: white !important; /* Custom text color */
+}
+
+.toast-info {
+  background-color: #2f96b4 !important; /* Custom info background color */
+  color: white !important; /* Custom text color */
+}
+
+.toast-warning {
+  background-color: #f89406 !important; /* Custom warning background color */
+  color: white !important; /* Custom text color */
+}
+
+.custom-toast-top-right {
+  position: absolute;
+  top: 20px !important;
+  right: 20px !important;
+}
+.custom-toast-top-right div{
+  display: flex;
+  padding: 5px 3px;
+  border-radius: 5px;
+}
+
+/* Style for close button */
+.toast-close-button {
+  border: 0;
+  background: transparent;
+  color: white;
+}
