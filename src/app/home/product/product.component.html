@@ -1,0 +1,221 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-primary card-outline">
+        <div class="card-header d-flex justify-content-between">
+          <h3 class="card-title text-success">
+            <i class="fas fa-envelope"></i>
+            Product
+          </h3>
+          <!-- /.card-header -->
+          <!-- [disabled]="!tableData" -->
+          <button  type="button" class="btn btn-sm btn-outline-success"
+            [hidden]="!isBtnCreateShow" (click)="Create()">
+            <i class="fas fa-plus-circle"></i> Create
+          </button>
+          <button #btnEditShow type="button" style="display: none;" (click)="EditShow()"></button>
+        </div>
+        <div class="card-body" [hidden]="!isDataGridShow">
+          <div class="row">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Brand</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let record of tableData; let i = index">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{record.ProductName}}</td>
+                  <td>{{record.Brand}}</td>
+                  <td>{{record.Type}}</td>
+                  <td>{{record.Stock}}</td>
+                  <td>
+                    <div class="text-center fs-18">
+                      <a title="Edit" class="edit" (click)="edit(record.ProductId)"><i class="far fa-edit" style="cursor: pointer"> </i> </a> |
+                      <a title="Delete" (click)="remove(record.ProductId,record.ProductName)"> <i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i></a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card-body" [hidden]="isDataGridShow">
+          <div class="card-body row">
+            <form [formGroup]="productForm" class="row">
+              <div class="col-lg-3 form-group">
+                <label for="ProductName">Product Name<span style="color: red;">*</span></label>
+                <input type="text"
+                 [ngClass]="{ 'is-invalid': productForm.get('ProductName')?.errors && productForm.get('ProductName')?.touched }" class="form-control" placeholder="Product Name" formControlName="ProductName">
+                <div class="invalid-feedback" *ngIf="productForm.get('ProductName')?.errors && productForm.get('ProductName')?.touched">You can't leave this empty.</div>
+              </div>
+              <div class="col-lg-3 form-group">
+                <label for="Brand">Brand<span style="color: red;">*</span></label>
+                <input type="text"
+                 [ngClass]="{ 'is-invalid': productForm.get('Brand')?.errors && productForm.get('Brand')?.touched }" class="form-control" placeholder="Product Name" formControlName="Brand">
+                <div class="invalid-feedback" *ngIf="productForm.get('Brand')?.errors && productForm.get('Brand')?.touched">You can't leave this empty.</div>
+              </div>
+              <div class="col-lg-3 form-group">
+                <label for="Type">Type<span style="color: red;">*</span></label>
+                <input type="text"
+                 [ngClass]="{ 'is-invalid': productForm.get('Type')?.errors && productForm.get('Type')?.touched }" class="form-control" placeholder="Product Name" formControlName="Type">
+                <div class="invalid-feedback" *ngIf="productForm.get('Type')?.errors && productForm.get('Type')?.touched">You can't leave this empty.</div>
+              </div>
+              <div class="col-lg-3 form-group">
+                <label for="Price">Price</label>
+                <input type="number" oninput="this.value=this.value.replace(/\D/g,'')"
+                 [ngClass]="{ 'is-invalid': productForm.get('Price')?.errors && productForm.get('Price')?.touched }" class="form-control" placeholder="Product Name" formControlName="Price">
+                <div class="invalid-feedback" *ngIf="productForm.get('Price')?.errors && productForm.get('Price')?.touched">You can't leave this empty.</div>
+              </div>
+              <div class="col-lg-3 form-group">
+                <label for="Stock">Stock</label>
+                <input type="number" oninput="this.value=this.value.replace(/\D/g,'')"
+                 [ngClass]="{ 'is-invalid': productForm.get('Stock')?.errors && productForm.get('Stock')?.touched }" class="form-control" placeholder="Product Name" formControlName="Stock">
+                <div class="invalid-feedback" *ngIf="productForm.get('Stock')?.errors && productForm.get('Stock')?.touched">You can't leave this empty.</div>
+              </div>
+              <div class="col-lg-3 form-group">
+                <label for="Description">Description</label>
+                <textarea type="number"
+                 [ngClass]="{ 'is-invalid': productForm.get('Description')?.errors && productForm.get('Description')?.touched }" class="form-control" placeholder="Product Name" formControlName="Description"></textarea>
+                <div class="invalid-feedback" *ngIf="productForm.get('Description')?.errors && productForm.get('Description')?.touched">You can't leave this empty.</div>
+              </div>
+              <div class="col-lg-3 form-group">
+                <label for="Image">Image</label>
+                <input type="text"
+                 [ngClass]="{ 'is-invalid': productForm.get('Image')?.errors && productForm.get('Image')?.touched }" class="form-control" placeholder="Product Name" formControlName="Image">
+                <div class="invalid-feedback" *ngIf="productForm.get('Image')?.errors && productForm.get('Image')?.touched">You can't leave this empty.</div>
+              </div>
+            </form>
+
+
+            <div class="col-12"
+              style="border: 1px solid #ccc;padding-top: 10px;padding-bottom: 10px;margin-top: 10px">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Sl.</th>
+                    <th>Color</th>
+                    <th>Specification</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let record of productVariantsData; let i = index">
+                    <tr *ngIf="!record.isDeleted">
+                      <!-- <td>{{i+1}}.</td>
+                      <td>{{record?.accountName}}</td>
+                      <td>{{record?.debitAmount}}</td>
+                      <td>{{record?.creditAmount}}</td>
+                      <td>{{record?.remarks}}</td> -->
+                      <td>
+                        <div>
+                          <div class="text-center fs-18">
+                            <a title="Edit" class="edit" (click)="dEdit(record)"><i class="far fa-edit"
+                                style="cursor: pointer"> </i> </a> |
+                            <a title="Delete" (click)="dRemove(record, i)">
+                              <i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i></a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                </tbody>
+              </table>
+            </div>
+
+            <br>
+
+            <div class="col-12 form-group panel-close-group" style="margin-top: 10px;">
+              <button *ngIf="!addNewFormValue" type="button" class="btn btn-primary"
+                (click)="addNewFormValue = true; addDetailsFormModel();">
+                <i class="fas fa-plus"></i>
+                Add new item
+              </button>
+              <button *ngIf="addNewFormValue" type="button" class="btn btn-danger panel-close"
+                (click)="closeProductVariants()">
+                <i class="fas fa-window-close"></i>
+              </button>
+            </div>
+            <div *ngIf="addNewFormValue" class="col-12 panel-body">
+              <div class="col-12" *ngIf="formArray.length>0">
+                <div class="row">
+                  <div class="col-lg-2 form-group">
+                    <label for="SequenceNo">Sequence No<span style="color: red;">*</span></label>
+                  </div>
+                  <div class="col-lg-2 form-group">
+                    <label for="AccountId">Account Head<span style="color: red;">*</span></label>
+                  </div>
+                  <div class="col-lg-3 form-group">
+                    <label for="Remarks">Remarks<span style="color: red;">*</span></label>
+                  </div>
+                  <div class="col-lg-2 form-group">
+                    <label for="DebitAmount">Debit Amount</label>
+                  </div>
+                  <div class="col-lg-2 form-group">
+                    <label for="CreditAmount">Credit Amount</label>
+                  </div>
+                </div>
+              </div>
+              <div *ngFor="let formGroup of formArray; let i = index" class="col-12">
+                <form [formGroup]="formGroup" class="row">
+                  <div class="col-lg-2 form-group">
+                    <input type="number"
+                      [ngClass]="{ 'is-invalid': formGroup.get('SequenceNo')?.errors && formGroup.get('SequenceNo')?.touched }"
+                      class="form-control" placeholder="Sequence No" formControlName="SequenceNo">
+                    <div class="invalid-feedback" *ngIf="formGroup.get('SequenceNo')?.errors && formGroup.get('SequenceNo')?.touched">
+                      You can't leave this empty.
+                    </div>
+                  </div>
+                  <div class="col-lg-3 form-group">
+                    <input type="text"
+                      [ngClass]="{ 'is-invalid': formGroup.get('Remarks')?.errors && formGroup.get('Remarks')?.touched }"
+                      class="form-control" placeholder="Remarks" formControlName="Remarks">
+                    <div class="invalid-feedback" *ngIf="formGroup.get('Remarks')?.errors && formGroup.get('Remarks')?.touched">
+                      You can't leave this empty.
+                    </div>
+                  </div>
+                  <div class="col-lg-1 d-flex justify-content-center align-items-start">
+                    <button type="button"
+                        class="btn btn-primary btn-sm float-right"
+                        style="margin-top: 3px;"
+                        (click)="removeVoucherDetailsField(i);">
+                        <i class="fas fa-minus-circle"></i>
+                      </button>
+                  </div>
+                </form>
+              </div>
+              <button type="button" class="btn btn-primary" (click)="addToGrid()">
+                <i class="fas fa-plus"></i>
+                {{ addToGridButtonText }}
+              </button>
+            </div>
+
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="Close()">
+              <i class="fas fa-window-close"></i>
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary"
+              (click)="saveOrUpdateVariants_NewApproach();">
+              <i class="fas fa-save"></i>
+              Save
+            </button>
+          </div>
+          <!-- </form> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

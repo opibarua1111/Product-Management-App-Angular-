@@ -13,7 +13,6 @@ export class HttpInterceptorService implements HttpInterceptor {
     if (token) {
       headers = headers.set('Authorization', `Bearer ${token}`);
     }
-    headers = headers.set('Content-Type', 'application/xml');
     headers = headers.set('Access-Control-Allow-Origin', '*');
 
     const cloned = request.clone({ headers });

@@ -11,6 +11,7 @@ export class AuthService {
 
   private baseUrl = environment.apiUrl;
   private accountUrl = this.baseUrl + 'Account/';
+  private productUrl = this.baseUrl + 'Product/';
 
   get<T>(url: string) {
     return this.http.get<any>(url);
@@ -30,6 +31,7 @@ export class AuthService {
   register(model: any) {
     return this.post(this.accountUrl + 'register', model);
   }
+
   login(model: any) {
     return this.post(this.accountUrl + 'login', model)
     .pipe(
@@ -44,5 +46,11 @@ export class AuthService {
       })
     );
   }
+
+  //#region Product
+  getProductList(model: any) {
+    return this.post(this.productUrl + 'getProductList', model);
+  }
+  //#endregion
 
 }
